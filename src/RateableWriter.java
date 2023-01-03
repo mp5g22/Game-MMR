@@ -12,6 +12,12 @@ import static java.lang.Integer.parseInt;
  */
 public class RateableWriter {
 
+  /**
+   * Asks the user for information for a rateable and then adds it to the relevant file.
+   *
+   * @param peopleFile The file of people which may have a person added to.
+   * @param gameElementsFile The file of gameElements which may have a gameElement added to.
+   */
   public void addRateables(File peopleFile, File gameElementsFile) throws Exception {
     while (true) {
       Scanner scanner = new Scanner(System.in);
@@ -36,6 +42,7 @@ public class RateableWriter {
         System.out.println("Enter the rating of the rateable");
         rating = parseInt(scanner.nextLine());
       } else {
+        //A rating given to KeyForge decks by an online algorithm that acts as a good starting point for rating.
         System.out.println("Enter the SAS score of the deck");
         int sas = parseInt(scanner.nextLine());
         rating = 100 + 2 * (sas - 64);
@@ -51,6 +58,12 @@ public class RateableWriter {
     }
   }
 
+  /**
+   * Adds one additional line to a rateable file.
+   *
+   * @param writer Used to write the line given to the file.
+   * @param rateable The rateable which will have information about it written to the file.
+   */
   public void writeRateableLine(FileWriter writer, Rateable rateable) throws IOException {
     writer.write(rateable.getName() + ", " + rateable.getRating() + ", " + rateable.getPlayedGames() + "\n");
   }
@@ -66,6 +79,12 @@ public class RateableWriter {
     writer.close();
   }
 
+  /**
+   * Replaces a stored file with all the rateables given by the program.
+   *
+   * @param rateables The rateables to be written to the file.
+   * @param file The rateable file to be written to.
+   */
   public void updateRateables(ArrayList<Rateable> rateables, File file) throws IOException {
     //Deletes the contents of the file.
     PrintWriter printWriter = new PrintWriter(file);
