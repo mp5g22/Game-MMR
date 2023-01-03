@@ -51,6 +51,8 @@ public class Rateable {
   public void changeRating(boolean didWin) {
     double ratingChange;
 
+    incrementPlayedGames();
+
     //The change in rating for the first game.
     double initialChange = 5;
     //The rate at which the change in rating changes, higher numbers mean a slower reduction in rating change.
@@ -66,7 +68,6 @@ public class Rateable {
     }
 
     rating += ratingChange;
-    incrementPlayedGames();
   }
 
   public void incrementPlayedGames() {
