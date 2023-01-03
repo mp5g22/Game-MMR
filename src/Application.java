@@ -4,29 +4,16 @@ import java.util.*;
 import static java.lang.Integer.parseInt;
 import static java.lang.Math.round;
 
-/**
- * The main part of the program that gets user choices and calls other methods.
- */
-public class Main {
-  //Used to determine the handicap for difference in player skill.
+public class Application {
   private static ArrayList<Rateable> people = new ArrayList<>();
-  //The file containing player ratings, used for reading people from and saving to after a game.
-  private static final File peopleFile = new File("people");
-  //The non player part of a game that determines handicap.
+  private static final File peopleFile = new File("C:\\Users\\mikey\\IdeaProjects\\Game MMR\\src\\people");
   private static ArrayList<Rateable> gameElements = new ArrayList<>();
-  //The file containing these gameElements, used for reading people from and saving to after a game.
-  private static final File gameElementsFile = new File("gameElements");
-  //Determines if the program will ask the user to add additional rateables.
+  private static final File gameElementsFile = new File("C:\\Users\\mikey\\IdeaProjects\\Game MMR\\src\\gameElements");
   private static final boolean addingMode = true;
 
-  /**
-   * controls the main flow of the program by calling other methods.
-   *
-   * @param Args nothing
-   */
   public static void main(String[] Args) {
     try {
-      Main application = new Main();
+      Application application = new Application();
       RateableWriter rateableWriter = new RateableWriter();
 
       if (addingMode) {
@@ -48,20 +35,12 @@ public class Main {
 
   }
 
-  /**
-   * Loads the rateables from files into class variables.
-   */
   public void getRateables() throws Exception {
     RateableReader fileReader = new RateableReader();
     people = fileReader.readRateables(peopleFile, true);
     gameElements = fileReader.readRateables(gameElementsFile, false);
   }
 
-  /**
-   * Gets the user to choose two people that are playing and two gameElements they are using.
-   *
-   * @return The rateables that were chosen by the user.
-   */
   public ArrayList<Rateable> chooseRateables() throws Exception {
     ArrayList<Rateable> chosenRateables = new ArrayList<>();
     ArrayList<String> peopleNames = new ArrayList<>();
@@ -82,13 +61,6 @@ public class Main {
     return chosenRateables;
   }
 
-  /**
-   * Returns the rateable with the name that was given.
-   *
-   * @param name The name of the rateable needed.
-   * @param isPerson Whether the rateable is a person.
-   * @return The rateable with the given name.
-   */
   public Rateable rateableFromName(String name, boolean isPerson) throws Exception {
     if (isPerson) {
       for (Rateable person : people) {
@@ -106,11 +78,6 @@ public class Main {
     throw new Exception("rateable not found with that name");
   }
 
-  /**
-   * Calculates the handicap in chains (for KeyForge) and displays it.
-   *
-   * @param chosenRateables The rateables chosen to be used in the game by the user, used to calculate the handicap.
-   */
   public void displayHandicap(ArrayList<Rateable> chosenRateables) {
     double ratingDifference = chosenRateables.get(0).getRating() - chosenRateables.get(1).getRating();
     ratingDifference += chosenRateables.get(2).getRating() - chosenRateables.get(3).getRating();
@@ -126,12 +93,6 @@ public class Main {
     System.out.println(chosenPlayer + " should play with " + chains + " chains.");
   }
 
-  /**
-   * Gets the winner of the game from the user and alters the rateables rating accordingly.
-   *
-   * @param chosenRateables The rateables chosen to be used in the game by the user, used to determine which rateables
-   *                        to alter.
-   */
   public void enterResult(ArrayList<Rateable> chosenRateables) {
     ArrayList<String> peopleNames = new ArrayList<>();
     peopleNames.add(chosenRateables.get(0).getName());
